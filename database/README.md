@@ -5,7 +5,6 @@ You can use the database as follow
 ## Mysql
 
 ### Creating your datasource
-
 `MainDatabase.js`
 ```
 const { Drivers } = require('way-libs/database');
@@ -70,3 +69,57 @@ module.exports = new Usuario();
 #### Usuario.deleteById(id, transaction)
 - `id` is the id or an object of compounded ids you want to retrieve
 - `transaction` Knex.Transaction object if you need to do that inside a transaction
+
+## Elasticsearch
+
+### Creating your datasource
+`Datasource.js`
+```
+const { Drivers } = require('way-libs/database');
+const config = {
+    index: 'database',
+    hosts: [
+        'https://'
+    ]
+};
+
+class Datasource extends Drivers.Elasticsearch {
+    constructor() {
+        super(config);
+    }
+}
+
+module.exports = Datasource;
+```
+
+### Creating your models
+`Table.js`
+```
+const { BaseModel } = require('way-libs/database');
+const Datasource = require('./Datasource');
+
+class Table extends BaseModel {
+    constructor() {
+        super('table', new Datasource());
+
+        // this.setPrimaryKey('id'); // You can define the primary key, default 'id'
+    }
+}
+
+module.exports = new Table();
+```
+
+### Functions
+
+#### Table.find(query)
+- `query` object with the search params
+
+#### Table.insert(payload)
+- `payload` the object to be inserted *The pk must be inside*
+
+#### Table.updateById(id, payload)
+- `id` to be updated
+- `payload` the object to be updated
+
+#### Table.deleteById(id)
+- `id` to be deleted

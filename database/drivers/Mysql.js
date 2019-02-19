@@ -1,11 +1,10 @@
 const Driver = require('./Driver');
-const knex = require('knex');
 
 class Mysql extends Driver {
     constructor(config) {
         super();
         
-        this.db = knex(config);
+        this.db = require('knex')(config);
     }
 
     initialize(model) {
