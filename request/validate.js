@@ -12,7 +12,7 @@ const getDataError = (error) => {
 }
 
 module.exports = {
-    validateParams: (schema, name) => {
+    params: (schema, name) => {
         return (req, res, next) => {
             let result = Joi.validate(req.params, schema)
 
@@ -33,7 +33,7 @@ module.exports = {
         }
     },
 
-    validateQuery: (schema) => {
+    query: (schema) => {
         return (req, res, next) => {
             let result = Joi.validate(req.query, schema);
 
@@ -54,7 +54,7 @@ module.exports = {
         }
     },
 
-    validateBody: (schema) => {
+    body: (schema) => {
         return (req, res, next) => {
             let result = Joi.validate(req.body, schema);
 

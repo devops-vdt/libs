@@ -1,3 +1,4 @@
+const router = require('express').Router;
 const validate = require('./validate');
 
-module.exports = { validate }
+module.exports = { router, validate };
