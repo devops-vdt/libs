@@ -41,6 +41,9 @@ class Mysql extends Driver {
             }
 
             if (where) {
+                if (typeof(where) !== 'object') {
+                    throw new Error(`invalid where params on find: ${JSON.stringify(where)}`);
+                }
                 return builder.where(where);
             }
 
