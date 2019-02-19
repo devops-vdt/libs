@@ -1,0 +1,11 @@
+{
+  "name": "way-libs",
+  "version": "1.0.0",
+  "description": "libs for vadetaxi nodejs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
