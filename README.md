@@ -17,7 +17,7 @@ You can use the database as follow
 const { Drivers } = require('way-libs/database');
 const knexConfig = require('./knexfile.json');
 
-const MainDatabase extends Drivers.Mysql {
+class MainDatabase extends Drivers.Mysql {
     constructor() {
         super(knexConfig);
     }
