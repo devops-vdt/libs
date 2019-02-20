@@ -97,19 +97,32 @@ class Elasticsearch extends Driver {
     find(model) {
         return (query) => {
             return new Promise((resolve, reject) => {
-                const filters = [];
-                for(let key of Object.keys(query)) {
-                    const filter = {};
-                    
-                    if (typeof(query[key]) === 'string') {
-                        filter[`${key}.keyword`] = query[key];
-                    } else {
-                        filter[key] = query[key];
+                const treatFilters = (filters, q, prefix = '') => {
+                    for(let key of Object.keys(q)) {
+                        if (prefix) {
+                            prefix += '.'
+                        }
+                        const keyField = `${prefix}${key}`;
+
+                        if (typeof(q[key]) === 'object') {
+                            treatFilters(filters, q[key], keyField);
+                        } else {
+                            const filter = {};
+
+                            if (typeof(q[key]) === 'string') {
+                                filter[`${keyField}.keyword`] = q[key];
+                            } else {
+                                filter[keyField] = q[key];
+                            }
+
+                            filters.push({ term: filter });
+                        }
                     }
 
-                    filters.push({ term: filter });
+                    return filters;
                 }
 
+                const filters = treatFilters([], query);
                 const filter = {
                     index: this.index,
                     type: model.table,
@@ -121,8 +134,6 @@ class Elasticsearch extends Driver {
                         }
                     }
                 };
-
-                console.log(JSON.stringify(filter), 'filter');
 
                 this.client.search(filter, (err, response, status) => {
                     if (err) {
