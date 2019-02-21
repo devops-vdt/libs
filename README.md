@@ -8,3 +8,5 @@ npm install -S git+https://dev-vdt:senhadogitdodev-vdt@github.com/devops-vdt/lib
 
 - [Database](database)
 - [Request](request)
+- [Middleware](middlewares)
+- [Logger](logger)
