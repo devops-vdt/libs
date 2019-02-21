@@ -17,7 +17,7 @@ module.exports = (config) => {
     });
 
     const logService = lawgs.getOrCreate(config.appName);
-    logsService.config({
+    logService.config({
         uploadMaxTimer: config.uploadMaxTimer
     });
 
