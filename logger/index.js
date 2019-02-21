@@ -44,24 +44,38 @@ module.exports = (config) => {
             };
         },
 
+        logByPeriod: (pattern, data) => {
+            logger.log(getDate(pattern), data);
+        },
+
         logByYear: () => {
-            return logger.custom(getDate('Y'));
+            return (data) => {
+                logger.logByPeriod('Y', data);
+            }  
         },
 
         logByMonth: () => {
-            return logger.custom(getDate('Y-m'));
+            return (data) => {
+                logger.logByPeriod('Y-m', data);
+            }
         },
 
         logByDay: () => {
-            return logger.custom(getDate('Y-m-d'));
+            return (data) => {
+                logger.logByPeriod('Y-m-d', data);
+            }
         },
 
         logByHour: () => {
-            return logger.custom(getDate('Y-m-d-H'));
+            return (data) => {
+                logger.logByPeriod('Y-m-d-H', data);
+            }
         },
 
         logByMinute: () => {
-            return logger.custom(getDate('Y-m-d-H-i'));
+            return (data) => {
+                logger.logByPeriod('Y-m-d-H-i', data);
+            }
         },
     
         log: (type, data) => {
