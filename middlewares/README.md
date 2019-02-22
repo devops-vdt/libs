@@ -30,4 +30,23 @@ function extract(req, res) {
         hostname: req.hostname
     }
 }
+
+// in this case just the hostname will be logged
+// by default the lib already have a 
+```
+
+## error404
+
+```
+const { error404 } = require('way-libs/middlewares');
+
+app.use(error404);
+```
+
+## errors
+
+```
+const { errors } = require('way-libs/middlewares');
+
+app.use(errors);
 ```
