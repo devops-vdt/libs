@@ -83,7 +83,8 @@ module.exports = (config) => {
                 logService.log(type, data);
             }
 
-            console.log(`[LOG][${type}] ${JSON.stringify(data)}`);
+            const indent = !process.env.LOG_INDENT ? null : 4;
+            console.log(`[LOG][${type}] ${JSON.stringify(data, null, indent)}`);
         }
     };
 
