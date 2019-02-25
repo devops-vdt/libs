@@ -10,3 +10,7 @@ npm install -S git+https://dev-vdt:senhadogitdodev-vdt@github.com/devops-vdt/lib
 - [Request](request)
 - [Middleware](middlewares)
 - [Logger](logger)
+
+## Debug
+
+Set the `WAY_LIB_DEBUG` environment variable
