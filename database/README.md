@@ -70,6 +70,22 @@ module.exports = new Usuario();
 - `id` is the id or an object of compounded ids you want to retrieve
 - `transaction` Knex.Transaction object if you need to do that inside a transaction
 
+
+### Transactions
+
+In knex transactions with `async` functions has autocommits, so if there is no errors inside the `async` function it will commit, if there is errors, it will rollback.
+
+```
+const MainDatabase = require('./MainDatabase');
+const Usuario = require('./Usuario');
+
+const database = new MainDatabase();
+
+database.startTransaction(async (transaction) => {
+    await Usuario.insert({ ... }, transaction);
+});
+```
+
 ## Elasticsearch
 
 ### Creating your datasource

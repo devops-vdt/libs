@@ -7,6 +7,10 @@ class Mysql extends Driver {
         this.db = require('knex')(config);
     }
 
+    startTransaction(transactionFunction) {
+        return this.db.transaction(transactionFunction);
+    }
+
     initialize(model) {
         model.db = this.db;
         
