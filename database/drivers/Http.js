@@ -11,8 +11,7 @@ class Http extends Driver {
 
     initialize(model) {
         model.host = this.host;
-        model.defaultHeaders = this.headers;
-
+        model.defaultHeaders = this.defaultHeaders;
 
         model._setMethod = (method) => {
             model.method = method;
@@ -61,7 +60,7 @@ class Http extends Driver {
         }
 
         model.addSuffix = (suffix) => {
-            model.suffix = `${model.suffix}${suffix}`;
+            model.suffix = `${model.suffix ? model.suffix : ''}${suffix}`;
             return model;
         }
 
@@ -76,9 +75,14 @@ class Http extends Driver {
                     queryParams = `?${encodeURIComponent(model.query)}`;
                 }
 
+                let suffix = ''
+                if (model.suffix != null) {
+                    suffix = model.suffix
+                }
+
                 const callObject = {
                     method: model.method || 'get',
-                    url: `${model.host}${model.suffix}${queryParams}`,
+                    url: `${model.host}${model.table}${suffix}${queryParams}`,
                 };
 
                 if ((typeof model.headers == 'object' && Object.keys(model.headers).length > 0) || ( typeof model.defaultHeaders == 'object' && Object.keys(model.defaultHeaders).length > 0)) {
@@ -88,6 +92,8 @@ class Http extends Driver {
                 if (typeof model.data == 'object' && Object.keys(model.data).length > 0) {
                     callObject.data = model.data;
                 }
+
+                console.log(callObject);
 
                 require('axios')(callObject)
                     .then((response) => response.data)
