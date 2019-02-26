@@ -5,7 +5,6 @@ const crypto = require('crypto');
 class CryptComponent {
 
     constructor(dbConfig, keyName, keyPublic, keyPrivate) {
-
         this.knex = require('knex')(dbConfig);
 
         this._keyName = keyName;
@@ -116,3 +115,4 @@ class CryptComponent {
 }
 
 module.exports = CryptComponent;
+
