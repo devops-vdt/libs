@@ -139,3 +139,98 @@ module.exports = new Table();
 
 #### Table.deleteById(id)
 - `id` to be deleted
+
+## Http
+
+`Datasource.js`
+```
+const { Drivers } = require('way-libs/database');
+
+const configHttp = {
+    host: 'http://hmg.waytaxi.com:4212',
+    headers: {
+        'Content-Type': 'application/json',
+        'X-Finance-Authorization': 'dg6WuzRalE5wxZJIgU7OStC8Ic5xBC1CXhd8NGeW'
+    }
+};
+
+class WayFinanceDS extends Drivers.Http {
+    constructor() {
+        super(configHttp);
+    }
+}
+
+module.exports = WayFinanceDS;
+```
+
+`FilesResource.js`
+```
+const { BaseModel } = require('way-libs/database');
+const WayFinanceDS = require('./WayFinanceDS');
+
+class FilesResource extends BaseModel {
+    constructor() {
+        super('/v1/paymentFiles', new WayFinanceDS());
+    }
+}
+
+module.exports = new FilesResource();
+```
+
+`Usage`
+```
+const FilesResource = require('./FilesResource');
+
+FilesResource
+    .addSuffix('/all')
+    .call()
+    .then((data) => {
+        console.log(data);
+    });
+```
+
+### Functions
+
+The model is a buildable object that will make a http request at the end
+
+#### FilesResource.get
+Set method as GET
+
+#### FilesResource.post
+Set method as POST
+
+#### FilesResource.put
+Set method as PUT
+
+#### FilesResource.delete
+Set method as DELETE
+
+#### FilesResource.patch
+Set method as PATCH
+
+#### FilesResource.setQuery(query)
+Set the query object
+
+#### FilesResource.addQuery(query)
+Append the query object
+
+#### FilesResource.setData(data)
+Set the data object
+
+#### FilesResource.addData(data)
+Append the data object
+
+#### FilesResource.setHeaders(headers)
+Set the headers object
+
+#### FilesResource.addHeaders(headers)
+Append the headers object
+
+#### FilesResource.setSuffix(suffix)
+Set the suffix of the url
+
+#### FilesResource.addSuffix(suffix)
+Append the suffix of the url
+
+#### FilesResource.setId(id)
+Override the suffix whe the id

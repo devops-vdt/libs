@@ -6,7 +6,7 @@ class Http extends Driver {
         super();
         
         this.host = config.host;
-        this.defaultHeaders = config.headers;
+        this.defaultHeaders = config.headers || {};
     }
 
     initialize(model) {
@@ -92,8 +92,6 @@ class Http extends Driver {
                 if (typeof model.data == 'object' && Object.keys(model.data).length > 0) {
                     callObject.data = model.data;
                 }
-
-                console.log(callObject);
 
                 require('axios')(callObject)
                     .then((response) => response.data)
