@@ -34,7 +34,7 @@ class CryptComponent {
         let crypted = cipher.update(value, 'utf8', 'binary')
         crypted += cipher.final('binary')
 
-        return crypted;
+        return Buffer.from(crypted, 'binary');
     }
 
     async _decrypt(value, encryptType) {
