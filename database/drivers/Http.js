@@ -12,97 +12,90 @@ class Http extends Driver {
     initialize(model) {
         model.host = this.host;
         model.defaultHeaders = this.headers;
-    }
 
-    static get Model() {
-        return class BaseHttpModel extends BaseModel {
-            constructor(endpoint) {
-                super(endpoint, new Http());
-            }
 
-            _setMethod(method) {
-                this.method = method;
-                return this;
-            }
+        model._setMethod = (method) => {
+            model.method = method;
+            return model;
+        }
 
-            get() { return this._setMethod('get'); }
-            post() { return this._setMethod('post'); }
-            put() { return this._setMethod('put'); }
-            delete() { return this._setMethod('delete'); }
-            patch() { return this._setMethod('patch'); }
+        model.get = () => model._setMethod('get');
+        model.post = () => model._setMethod('post');
+        model.put = () => model._setMethod('put');
+        model.delete = () => model._setMethod('delete');
+        model.patch = () => model._setMethod('patch');
 
-            setQuery(query) {
-                this.query = query;
-                return this;
-            }
+        model.setQuery = (query) => {
+            model.query = query;
+            return model;
+        }
 
-            addQuery(query) {
-                this.query = { ...this.query, query };
-                return this;
-            }
+        model.addQuery = (query) => {
+            model.query = { ...model.query, query };
+            return model;
+        }
 
-            setData(data) {
-                this.data = data;
-                return this;
-            }
+        model.setData = (data) => {
+            model.data = data;
+            return model;
+        }
 
-            addData(data) {
-                this.data = { ...this.data, data };
-                return this;
-            }
+        model.addData = (data) => {
+            model.data = { ...model.data, data };
+            return model;
+        }
 
-            setHeaders(headers) {
-                this.headers = headers;
-                return this;
-            }
+        model.setHeaders = (daheadersta) => {
+            model.headers = headers;
+            return model;
+        }
 
-            addHeaders(headers) {
-                this.headers = { ...this.headers, headers };
-                return this;
-            }
+        model.addHeaders = (data) => {
+            model.headers = { ...model.headers, headers };
+            return model;
+        }
 
-            setSuffix(suffix) {
-                this.suffix = suffix;
-                return this;
-            }
+        model.setSuffix = (suffix) => {
+            model.suffix = suffix;
+            return model;
+        }
 
-            addSuffix(suffix) {
-                this.suffix = `${this.suffix}${suffix}`;
-                return this;
-            }
+        model.addSuffix = (suffix) => {
+            model.suffix = `${model.suffix}${suffix}`;
+            return model;
+        }
 
-            setId(id) {
-                return this.setSuffix(`/${id}`);
-            }
+        model.setId = (id) => {
+            return this.setSuffix(`/${id}`);
+        }
 
-            call() {
-                return new Promise((resolve, reject) => {
-                    let queryParams = '';
-                    if (Object.keys(this.query).length > 0) {
-                        queryParams = `?${encodeURIComponent(this.query)}`;
-                    }
+        model.call = () => {
+            return new Promise((resolve, reject) => {
+                let queryParams = '';
+                if (Object.keys(model.query).length > 0) {
+                    queryParams = `?${encodeURIComponent(model.query)}`;
+                }
 
-                    const callObject = {
-                        method: this.method || 'get',
-                        url: `${this.host}${this.suffix}${queryParams}`,
-                    };
+                const callObject = {
+                    method: model.method || 'get',
+                    url: `${model.host}${model.suffix}${queryParams}`,
+                };
 
-                    if (Object.keys(this.headers).length > 0 || Object.keys(this.defaultHeaders).length > 0) {
-                        callObject.headers = { ...this.headers, ...this.defaultHeaders };
-                    }
+                if (Object.keys(model.headers).length > 0 || Object.keys(model.defaultHeaders).length > 0) {
+                    callObject.headers = { ...model.headers, ...model.defaultHeaders };
+                }
 
-                    if (Object.keys(this.data).length > 0) {
-                        callObject.data = this.data;
-                    }
+                if (Object.keys(model.data).length > 0) {
+                    callObject.data = model.data;
+                }
 
-                    require('axios')(callObject)
-                        .then((response) => response.data)
-                        .then((data) => {
-                            resolve(data);
-                        });
-                });
-            }
-        };
+                require('axios')(callObject)
+                    .then((response) => response.data)
+                    .then((data) => {
+                        resolve(data);
+                    });
+            });
+        }
     }
 }
 
