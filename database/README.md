@@ -234,3 +234,6 @@ Append the suffix of the url
 
 #### FilesResource.setId(id)
 Override the suffix whe the id
+
+#### FileResource.call
+Execute the http request and return a promise of the data
