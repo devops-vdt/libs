@@ -72,7 +72,7 @@ class Http extends Driver {
         model.call = () => {
             return new Promise((resolve, reject) => {
                 let queryParams = '';
-                if (Object.keys(model.query).length > 0) {
+                if (typeof model.query == 'object' && Object.keys(model.query).length > 0) {
                     queryParams = `?${encodeURIComponent(model.query)}`;
                 }
 
@@ -81,11 +81,11 @@ class Http extends Driver {
                     url: `${model.host}${model.suffix}${queryParams}`,
                 };
 
-                if (Object.keys(model.headers).length > 0 || Object.keys(model.defaultHeaders).length > 0) {
+                if ((typeof model.headers == 'object' && Object.keys(model.headers).length > 0) || ( typeof model.defaultHeaders == 'object' && Object.keys(model.defaultHeaders).length > 0)) {
                     callObject.headers = { ...model.headers, ...model.defaultHeaders };
                 }
 
-                if (Object.keys(model.data).length > 0) {
+                if (typeof model.data == 'object' && Object.keys(model.data).length > 0) {
                     callObject.data = model.data;
                 }
 
