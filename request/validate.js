@@ -1,4 +1,6 @@
-const Joi = require("joi");
+const BaseJoi = require('joi');
+const JoiDate = require('joi-date-extensions');
+const Joi = BaseJoi.extend(JoiDate);
 
 const getDataError = (error) => {
     data = error.details.map(element => {
