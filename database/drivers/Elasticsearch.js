@@ -9,9 +9,13 @@ class Elasticsearch extends Driver {
         }
         
         this.index = config.index;
-        const connectionConfig = {
-            hosts: config.hosts
-        };
+
+        let connectionConfig = {};
+        for(let prop of Object.getOwnPropertyNames(config)) {
+            if (!['index'].includes(prop)) {
+                connectionConfig[prop] = config[prop];
+            }
+        }
         
         this.client = new require('elasticsearch').Client(connectionConfig);
     }
