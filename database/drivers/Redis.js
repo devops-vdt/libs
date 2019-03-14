@@ -10,7 +10,7 @@ class Redis extends Driver {
     initialize(model) {
         model.db = this.db;
 
-        model.insert = (object) => {
+        model.insert = (object, expireSeconds = null) => {
             const pk = model.pk || 'id';
 
             return new Promise((resolve, reject) => {
@@ -31,18 +31,26 @@ class Redis extends Driver {
 
                     model.db.set(key, JSON.stringify(object), (err, r) => {
                         if (err) {
-                            if (err) {
-                                reject(err);
-                            }
+                            reject(err);
                         }
 
-                        resolve(true);
+                        if (expireSeconds) {
+                            model.db.expire(key, expireSeconds, (err, r) => {
+                                if (err) {
+                                    reject(err);
+                                }
+
+                                resolve(true);
+                            });
+                        } else {
+                            resolve(true);
+                        }
                     });
                 });
             });
         }
 
-        model.update = (id, object) => {
+        model.update = (id, object, expireSeconds = null) => {
             const pk = model.pk || 'id';
 
             return new Promise((resolve, reject) => {
@@ -60,12 +68,20 @@ class Redis extends Driver {
 
                     model.db.set(key, JSON.stringify(object), (err, r) => {
                         if (err) {
-                            if (err) {
-                                reject(err);
-                            }
+                            reject(err);
                         }
 
-                        resolve(true);
+                        if (expireSeconds) {
+                            model.db.expire(key, expireSeconds, (err, r) => {
+                                if (err) {
+                                    reject(err);
+                                }
+
+                                resolve(true);
+                            });
+                        } else {
+                            resolve(true);
+                        }
                     });
                 });
             });
