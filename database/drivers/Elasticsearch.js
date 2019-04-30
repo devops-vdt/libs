@@ -5,21 +5,6 @@ class Elasticsearch extends Driver {
         super();
 
         this.client = client;
-
-        if (!config.index) {
-            throw new Error('You need to specify index on configuration');
-        }
-        
-        this.index = config.index;
-
-        let connectionConfig = {};
-        for(let prop of Object.getOwnPropertyNames(config)) {
-            if (!['index'].includes(prop)) {
-                connectionConfig[prop] = config[prop];
-            }
-        }
-        
-        this.client = new require('elasticsearch').Client(connectionConfig);
     }
 
     initialize(model) {
