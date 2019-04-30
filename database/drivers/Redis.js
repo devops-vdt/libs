@@ -1,10 +1,10 @@
 const Driver = require('./Driver');
 
 class Redis extends Driver {
-    constructor(config = {}) {
+    constructor(client) {
         super();
         
-        this.db = require('redis').createClient(config);
+        this.db = client
     }
 
     initialize(model) {

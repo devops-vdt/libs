@@ -1,8 +1,10 @@
 const Driver = require('./Driver');
 
 class Elasticsearch extends Driver {
-    constructor(config) {
+    constructor(client) {
         super();
+
+        this.client = client;
 
         if (!config.index) {
             throw new Error('You need to specify index on configuration');

@@ -1,10 +1,10 @@
 const Driver = require('./Driver');
 
 class Mysql extends Driver {
-    constructor(config) {
+    constructor(client) {
         super();
         
-        this.db = require('knex')(config);
+        this.db = client;
     }
 
     startTransaction(transactionFunction) {
