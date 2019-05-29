@@ -3,9 +3,5 @@
 declare function errors(err: any, req: any, res: any, next: any): void;
 
 
-declare namespace errors {
-    const prototype: {
-    };
 
-}
-
+export = errors;

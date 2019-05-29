@@ -8,11 +8,4 @@ declare class Http {
 }
 
 
-declare namespace Http {
-    namespace prototype {
-        function initialize(...args: any[]): void;
-
-    }
-
-}
-
+export = Http;

@@ -160,3 +160,5 @@ declare namespace index {
 
 }
 
+
+export = index;

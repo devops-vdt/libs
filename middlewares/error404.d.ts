@@ -3,9 +3,5 @@
 declare function error404(req: any, res: any, next: any): void;
 
 
-declare namespace error404 {
-    const prototype: {
-    };
 
-}
-
+export = error404;

@@ -17,22 +17,4 @@ declare class Elasticsearch {
 
 }
 
-
-declare namespace Elasticsearch {
-    namespace prototype {
-        function count(...args: any[]): void;
-
-        function deleteById(...args: any[]): void;
-
-        function find(...args: any[]): void;
-
-        function initialize(...args: any[]): void;
-
-        function insert(...args: any[]): void;
-
-        function updateById(...args: any[]): void;
-
-    }
-
-}
-
+export = Elasticsearch;

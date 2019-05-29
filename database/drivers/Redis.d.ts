@@ -8,11 +8,4 @@ declare class Redis {
 }
 
 
-declare namespace Redis {
-    namespace prototype {
-        function initialize(...args: any[]): void;
-
-    }
-
-}
-
+export = Redis;

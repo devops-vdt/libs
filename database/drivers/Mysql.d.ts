@@ -24,27 +24,5 @@ declare class Mysql {
 }
 
 
-declare namespace Mysql {
-    namespace prototype {
-        function deleteById(...args: any[]): void;
 
-        function find(...args: any[]): void;
-
-        function findById(...args: any[]): void;
-
-        function initialize(...args: any[]): void;
-
-        function insert(...args: any[]): void;
-
-        function insertMany(...args: any[]): void;
-
-        function startTransaction(...args: any[]): void;
-
-        function update(...args: any[]): void;
-
-        function updateById(...args: any[]): void;
-
-    }
-
-}
-
+export = Mysql;

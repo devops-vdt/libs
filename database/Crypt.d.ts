@@ -10,13 +10,5 @@ declare class Crypt {
 }
 
 
-declare namespace Crypt {
-    namespace prototype {
-        function decrypt(...args: any[]): void;
 
-        function encrypt(...args: any[]): void;
-
-    }
-
-}
-
+export = Crypt;

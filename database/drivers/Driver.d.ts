@@ -7,12 +7,4 @@ declare class Driver {
 
 }
 
-
-declare namespace Driver {
-    namespace prototype {
-        function initialize(...args: any[]): void;
-
-    }
-
-}
-
+export = Driver;

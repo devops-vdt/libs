@@ -1,4 +1,4 @@
-declare namespace index {
+declare namespace request {
     class validate {
         constructor(...args: any[]);
         body(schema: any): any;
@@ -12,3 +12,5 @@ declare namespace index {
         validate(schema: any): any;
     }
 }
+
+export = request;

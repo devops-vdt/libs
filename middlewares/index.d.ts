@@ -6,24 +6,7 @@ declare namespace index {
     function errors(err: any, req: any, res: any, next: any): void;
 
     function loggerRequests(loggerFunction: any, extractRequest: any): any;
-
-    namespace error404 {
-        const prototype: {
-        };
-
-    }
-
-    namespace errors {
-        const prototype: {
-        };
-
-    }
-
-    namespace loggerRequests {
-        const prototype: {
-        };
-
-    }
-
 }
 
+
+export = index;

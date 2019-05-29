@@ -12,15 +12,4 @@ declare class BaseModel {
 }
 
 
-declare namespace BaseModel {
-    namespace prototype {
-        function setDataSouce(...args: any[]): void;
-
-        function setPrimaryKey(...args: any[]): void;
-
-        function setTable(...args: any[]): void;
-
-    }
-
-}
-
+export = BaseModel;

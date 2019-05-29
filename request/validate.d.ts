@@ -13,3 +13,5 @@ declare namespace validate {
 
 }
 
+
+export = validate;

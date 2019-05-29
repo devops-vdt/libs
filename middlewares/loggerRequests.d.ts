@@ -3,9 +3,4 @@
 declare function loggerRequests(loggerFunction: any, extractRequest: any): any;
 
 
-declare namespace loggerRequests {
-    const prototype: {
-    };
-
-}
-
+export = loggerRequests;
