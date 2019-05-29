@@ -1,4 +1,4 @@
 module.exports = {
-    deepFreeze: require('./deepFreeze'),
-    date: require('./date'),
+    deepFreeze: require('/Users/dev/projects/libs/utils/deepFreeze'),
+    date: require('/Users/dev/projects/libs/utils/date'),
 }

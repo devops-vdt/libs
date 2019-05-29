@@ -3,5 +3,5 @@ module.exports = {
     request: require('./request'),
     middlewares: require('./middlewares'),
     logger: require('./logger'),
-    utils: require('./utils')
+    utils: require('./utils'),
 };
