@@ -21,28 +21,6 @@ declare namespace index {
 
     }
 
-    namespace BaseModel {
-        namespace prototype {
-            function setDataSouce(...args: any[]): void;
-
-            function setPrimaryKey(...args: any[]): void;
-
-            function setTable(...args: any[]): void;
-
-        }
-
-    }
-
-    namespace Crypt {
-        namespace prototype {
-            function decrypt(...args: any[]): void;
-
-            function encrypt(...args: any[]): void;
-
-        }
-
-    }
-
     namespace Drivers {
         class Elasticsearch {
             constructor(...args: any[]);
@@ -98,63 +76,6 @@ declare namespace index {
 
         }
 
-        namespace Elasticsearch {
-            namespace prototype {
-                function count(...args: any[]): void;
-
-                function deleteById(...args: any[]): void;
-
-                function find(...args: any[]): void;
-
-                function initialize(...args: any[]): void;
-
-                function insert(...args: any[]): void;
-
-                function updateById(...args: any[]): void;
-
-            }
-
-        }
-
-        namespace Http {
-            namespace prototype {
-                function initialize(...args: any[]): void;
-
-            }
-
-        }
-
-        namespace Mysql {
-            namespace prototype {
-                function deleteById(...args: any[]): void;
-
-                function find(...args: any[]): void;
-
-                function findById(...args: any[]): void;
-
-                function initialize(...args: any[]): void;
-
-                function insert(...args: any[]): void;
-
-                function insertMany(...args: any[]): void;
-
-                function startTransaction(...args: any[]): void;
-
-                function update(...args: any[]): void;
-
-                function updateById(...args: any[]): void;
-
-            }
-
-        }
-
-        namespace Redis {
-            namespace prototype {
-                function initialize(...args: any[]): void;
-
-            }
-
-        }
 
     }
 
