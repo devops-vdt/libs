@@ -44,12 +44,12 @@ class Http extends Driver {
             return model;
         }
 
-        model.setHeaders = (daheadersta) => {
+        model.setHeaders = (headers) => {
             model.headers = headers;
             return model;
         }
 
-        model.addHeaders = (data) => {
+        model.addHeaders = (headers) => {
             model.headers = { ...model.headers, headers };
             return model;
         }
