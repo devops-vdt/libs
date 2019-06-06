@@ -49,6 +49,11 @@ class Http extends Driver {
             return model;
         }
 
+        model.setParam = (name, value) => {
+            model.table = model.table.replace(`{${name}}`, value);
+            return model;
+        }
+
         model.addHeaders = (headers) => {
             model.headers = { ...model.headers, headers };
             return model;
