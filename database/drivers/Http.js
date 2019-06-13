@@ -76,6 +76,8 @@ class Http extends Driver {
         model.setTimeout = (timeout, timeoutDefault) => {
             model.timeout = timeout;
             model.timeoutDefault = timeoutDefault;
+
+            return model;
         }
 
         model.call = async () => {
