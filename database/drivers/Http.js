@@ -73,37 +73,49 @@ class Http extends Driver {
             return this.setSuffix(`/${id}`);
         }
 
-        model.call = () => {
-            return new Promise((resolve, reject) => {
-                let queryParams = '';
-                if (typeof model.query == 'object' && Object.keys(model.query).length > 0) {
-                    queryParams = `?${encodeURIComponent(model.query)}`;
-                }
+        model.setTimeout = (timeout, timeoutDefault) => {
+            model.timeout = timeout;
+            model.timeoutDefault = timeoutDefault;
+        }
 
-                let suffix = ''
-                if (model.suffix != null) {
-                    suffix = model.suffix
-                }
+        model.call = async () => {
+            let queryParams = '';
+            if (typeof model.query == 'object' && Object.keys(model.query).length > 0) {
+                queryParams = `?${encodeURIComponent(model.query)}`;
+            }
 
-                const callObject = {
-                    method: model.method || 'get',
-                    url: `${model.host}${model.table}${suffix}${queryParams}`,
-                };
+            let suffix = ''
+            if (model.suffix != null) {
+                suffix = model.suffix
+            }
 
-                if ((typeof model.headers == 'object' && Object.keys(model.headers).length > 0) || ( typeof model.defaultHeaders == 'object' && Object.keys(model.defaultHeaders).length > 0)) {
-                    callObject.headers = { ...model.headers, ...model.defaultHeaders };
-                }
+            const callObject = {
+                method: model.method || 'get',
+                url: `${model.host}${model.table}${suffix}${queryParams}`,
+            };
 
-                if (typeof model.data == 'object' && Object.keys(model.data).length > 0) {
-                    callObject.data = model.data;
-                }
+            if ((typeof model.headers == 'object' && Object.keys(model.headers).length > 0) || ( typeof model.defaultHeaders == 'object' && Object.keys(model.defaultHeaders).length > 0)) {
+                callObject.headers = { ...model.headers, ...model.defaultHeaders };
+            }
 
-                require('axios')(callObject)
-                    .then((response) => response.data)
-                    .then((data) => {
-                        resolve(data);
-                    });
-            });
+            if (typeof model.data == 'object' && Object.keys(model.data).length > 0) {
+                callObject.data = model.data;
+            }
+
+            const promises = [];
+            
+            const request = require('axios')(callObject).then((response) => response.data);
+            promises.push(request);
+
+            if (model.timeout) {
+                promises.push(new Promise(resolve => {
+                    setTimeout(() => {
+                        resolve(model.timeoutDefault || null);
+                    }, model.timeout);
+                }));
+            }
+
+            return await Promise.race(promises);
         }
     }
 }
