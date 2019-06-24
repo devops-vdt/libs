@@ -3,7 +3,7 @@
 declare namespace middlewares {
     function error404(req: any, res: any, next: any): void;
 
-    function errors(err: any, req: any, res: any, next: any): void;
+    function errors(logger: any): (err: any, req: any, res: any, next: any) => void;
 
     function loggerRequests(loggerFunction: any, extractRequest: any): any;
 }

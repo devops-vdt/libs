@@ -3,7 +3,7 @@
 declare namespace utils {
     function date(pattern: any): any;
 
-    function deepFreeze(object: any): any;
+    function deepFreeze<T>(object: T): T;
 
 }
 
