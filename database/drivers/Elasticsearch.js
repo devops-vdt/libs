@@ -9,7 +9,7 @@ class Elasticsearch extends Driver {
 
     initialize(model) {
         model.client = this.client;
-        model.index = this.index;
+        model.index = model.table;
         model.pk = model.pk || 'id';
 
         model.find = this.find(model);
@@ -26,8 +26,7 @@ class Elasticsearch extends Driver {
                 }
 
                 const document = {
-                    index: this.index,
-                    type: model.table,
+                    index: model.table,
                     id: payload[model.pk],
                     body: payload
                 };
@@ -45,9 +44,11 @@ class Elasticsearch extends Driver {
 
     updateById(model, insertOrUpdate) {
         return (id, payload) => {
-            const newPayload = { ...payload };
+            const newPayload = {
+                ...payload
+            };
             newPayload[model.pk] = id;
-            
+
             return insertOrUpdate(newPayload);
         }
     }
@@ -56,8 +57,7 @@ class Elasticsearch extends Driver {
         return (id) => {
             return new Promise((resolve, reject) => {
                 const filter = {
-                    index: this.index,
-                    type: model.table,
+                    index: model.table,
                     id
                 };
 
@@ -75,7 +75,9 @@ class Elasticsearch extends Driver {
     count(model) {
         return () => {
             return new Promise((resolve, reject) => {
-                const filter = { index: this.index, type: model.table };
+                const filter = {
+                    index: model.table
+                };
                 this.client.count(filter, (err, response, status) => {
                     if (err) {
                         reject(err);
@@ -91,24 +93,26 @@ class Elasticsearch extends Driver {
         return (query) => {
             return new Promise((resolve, reject) => {
                 const treatFilters = (filters, q, prefix = '') => {
-                    for(let key of Object.keys(q)) {
+                    for (let key of Object.keys(q)) {
                         if (prefix) {
                             prefix += '.'
                         }
                         const keyField = `${prefix}${key}`;
 
-                        if (typeof(q[key]) === 'object') {
+                        if (typeof (q[key]) === 'object') {
                             treatFilters(filters, q[key], keyField);
                         } else {
                             const filter = {};
 
-                            if (typeof(q[key]) === 'string') {
+                            if (typeof (q[key]) === 'string') {
                                 filter[`${keyField}.keyword`] = q[key];
                             } else {
                                 filter[keyField] = q[key];
                             }
 
-                            filters.push({ term: filter });
+                            filters.push({
+                                term: filter
+                            });
                         }
                     }
 
@@ -117,8 +121,7 @@ class Elasticsearch extends Driver {
 
                 const filters = treatFilters([], query);
                 const filter = {
-                    index: this.index,
-                    type: model.table,
+                    index: model.table,
                     body: {
                         query: {
                             bool: {
