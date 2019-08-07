@@ -4,7 +4,7 @@ const BaseModel = require('../models/BaseModel');
 class Http extends Driver {
     constructor(config) {
         super();
-        
+
         this.host = config.host;
         this.defaultHeaders = config.headers || {};
     }
@@ -12,6 +12,7 @@ class Http extends Driver {
     initialize(model) {
         model.host = this.host;
         model.defaultHeaders = this.defaultHeaders;
+        model.params = []
 
         model._setMethod = (method) => {
             model.method = method;
@@ -30,7 +31,10 @@ class Http extends Driver {
         }
 
         model.addQuery = (query) => {
-            model.query = { ...model.query, query };
+            model.query = {
+                ...model.query,
+                query
+            };
             return model;
         }
 
@@ -40,7 +44,10 @@ class Http extends Driver {
         }
 
         model.addData = (data) => {
-            model.data = { ...model.data, data };
+            model.data = {
+                ...model.data,
+                data
+            };
             return model;
         }
 
@@ -50,12 +57,23 @@ class Http extends Driver {
         }
 
         model.setParam = (name, value) => {
-            model.table = model.table.replace(`{${name}}`, value);
+            models.params = [
+                ...models.params,
+                {
+                    name,
+                    value
+                }
+
+            ]
+
             return model;
         }
 
         model.addHeaders = (headers) => {
-            model.headers = { ...model.headers, headers };
+            model.headers = {
+                ...model.headers,
+                headers
+            };
             return model;
         }
 
@@ -91,13 +109,19 @@ class Http extends Driver {
                 suffix = model.suffix
             }
 
+            let url = model.params.reduce((prev, curr) =>
+                prev.replace(new RegExp(curr.name, 'g'), curr.value), `${model.host}${model.table}${suffix}${queryParams}`)
+
             const callObject = {
                 method: model.method || 'get',
-                url: `${model.host}${model.table}${suffix}${queryParams}`,
+                url
             };
 
-            if ((typeof model.headers == 'object' && Object.keys(model.headers).length > 0) || ( typeof model.defaultHeaders == 'object' && Object.keys(model.defaultHeaders).length > 0)) {
-                callObject.headers = { ...model.headers, ...model.defaultHeaders };
+            if ((typeof model.headers == 'object' && Object.keys(model.headers).length > 0) || (typeof model.defaultHeaders == 'object' && Object.keys(model.defaultHeaders).length > 0)) {
+                callObject.headers = {
+                    ...model.headers,
+                    ...model.defaultHeaders
+                };
             }
 
             if (typeof model.data == 'object' && Object.keys(model.data).length > 0) {
@@ -105,7 +129,7 @@ class Http extends Driver {
             }
 
             const promises = [];
-            
+
             const request = require('axios')(callObject).then((response) => response.data);
             promises.push(request);
 
